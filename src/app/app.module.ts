@@ -3,8 +3,27 @@ import { ExercisesModule } from 'src/exercises/exercises.module';
 import { UserModule } from 'src/user/user.module';
 import { WorkoutExercisesModule } from 'src/workout-exercises/workout-exercises.module';
 import { WorkoutModule } from 'src/workout/workout.module';
+import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @Module({
-  imports: [ExercisesModule, UserModule, WorkoutModule, WorkoutExercisesModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'trainingdatabase',
+      entities: [UserEntity],
+      synchronize: true,
+    }),
+    ExercisesModule,
+    UserModule,
+    WorkoutModule,
+    WorkoutExercisesModule,
+  ],
+  providers: [AppService],
 })
 export class AppModule {}

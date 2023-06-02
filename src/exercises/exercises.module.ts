@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 
 @Module({
-  providers: [ExercisesService]
+  providers: [ExercisesService],
 })
 export class ExercisesModule {}
