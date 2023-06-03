@@ -6,6 +6,7 @@ import { WorkoutModule } from 'src/workout/workout.module';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
+import { WorkoutEntity } from 'src/workout/entities/workout.entity';
 
 @Module({
   imports: [
@@ -16,8 +17,8 @@ import { UserEntity } from 'src/user/entities/user.entity';
       username: 'root',
       password: '',
       database: 'trainingdatabase',
-      entities: [UserEntity],
-      synchronize: true,
+      entities: [UserEntity, WorkoutEntity],
+      synchronize: false,
     }),
     ExercisesModule,
     UserModule,

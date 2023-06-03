@@ -10,7 +10,9 @@ import {
 import { UserService } from './user.service';
 import { UserEntity } from './entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './dtos';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -26,9 +28,7 @@ export class UserController {
     if (user) {
       return user;
     } else {
-      throw new NotFoundException(
-        'Użytkownik o podanym identyfikatorze nie został znaleziony',
-      );
+      throw new NotFoundException('User not found!');
     }
   }
   @Post()
