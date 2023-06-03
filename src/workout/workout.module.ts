@@ -4,10 +4,11 @@ import { WorkoutController } from './workout.controller';
 import { WorkoutService } from './workout.service';
 import { UserModule } from '../user/user.module';
 import { WorkoutEntity } from './entities/workout.entity';
+import { UserService } from 'src/user/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([WorkoutEntity]), UserModule],
   controllers: [WorkoutController],
-  providers: [WorkoutService],
+  providers: [WorkoutService, UserService],
 })
 export class WorkoutModule {}

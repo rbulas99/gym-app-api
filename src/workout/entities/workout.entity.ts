@@ -6,10 +6,10 @@ export class WorkoutEntity {
   workoutId: number;
 
   @Column()
-  userId: string;
+  userId: number;
 
-  @Column()
-  date: string;
+  @Column({ type: 'datetime' })
+  date: Date;
 
   @Column()
   name: string;
