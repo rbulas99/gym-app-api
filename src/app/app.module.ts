@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ExercisesModule } from 'src/exercises/exercises.module';
 import { UserModule } from 'src/user/user.module';
-import { WorkoutExercisesModule } from 'src/workout-exercises/workout-exercises.module';
 import { WorkoutModule } from 'src/workout/workout.module';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { WorkoutEntity } from 'src/workout/entities/workout.entity';
 import { ExercisesEntity } from 'src/exercises/entities/exercises.entity';
+import { SeriesEnity } from 'src/series/entities/series.enity';
+import { SeriesModule } from 'src/series/series.module';
+import { ExercisesListEntity } from 'src/exercises/entities';
 
 @Module({
   imports: [
@@ -18,13 +20,19 @@ import { ExercisesEntity } from 'src/exercises/entities/exercises.entity';
       username: 'root',
       password: '',
       database: 'trainingdatabase',
-      entities: [UserEntity, WorkoutEntity, ExercisesEntity],
+      entities: [
+        UserEntity,
+        WorkoutEntity,
+        ExercisesEntity,
+        SeriesEnity,
+        ExercisesListEntity,
+      ],
       synchronize: false,
     }),
     UserModule,
     WorkoutModule,
     ExercisesModule,
-    WorkoutExercisesModule,
+    SeriesModule,
   ],
   providers: [AppService],
 })

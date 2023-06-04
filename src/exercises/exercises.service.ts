@@ -2,16 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExercisesEntity } from './entities/exercises.entity';
 import { Repository } from 'typeorm';
-import { UserService } from 'src/user/user.service';
 import { WorkoutService } from 'src/workout/workout.service';
 import { AddExerciseDto } from './dtos';
+import { ExercisesListEntity } from './entities';
 
 @Injectable()
 export class ExercisesService {
   constructor(
     @InjectRepository(ExercisesEntity)
     private readonly exercisesRepository: Repository<ExercisesEntity>,
-    private readonly userService: UserService,
+    @InjectRepository(ExercisesListEntity)
+    private readonly exercisesListRepository: Repository<ExercisesListEntity>,
     private readonly workoutService: WorkoutService,
   ) {}
 
@@ -50,5 +51,8 @@ export class ExercisesService {
       return this.exercisesRepository.delete(exerciseId);
     }
     throw new NotFoundException('Exercise not found!');
+  }
+  async getExercisesList() {
+    return this.exercisesListRepository.find();
   }
 }

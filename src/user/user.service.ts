@@ -11,23 +11,20 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getAllUsers(): Promise<UserEntity[]> {
+  async getAllUsers() {
     return this.userRepository.find();
   }
-  async getUser(id: number): Promise<UserEntity> {
+  async getUser(id: number) {
     return this.userRepository.findOne({ where: { userId: id } });
   }
-  async addUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+  async addUser(createUserDto: CreateUserDto) {
     const user = new UserEntity();
     user.username = createUserDto.username;
     user.height = createUserDto.height;
     user.weight = createUserDto.weight;
     return this.userRepository.save(user);
   }
-  async updateUser(
-    id: number,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserEntity> {
+  async updateUser(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne({ where: { userId: id } });
     if (!user) {
       throw new NotFoundException('User not found!');

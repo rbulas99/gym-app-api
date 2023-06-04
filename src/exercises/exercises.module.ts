@@ -7,10 +7,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExercisesEntity } from './entities/exercises.entity';
 import { UserModule } from 'src/user/user.module';
 import { WorkoutModule } from 'src/workout/workout.module';
+import { ExercisesListEntity } from './entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ExercisesEntity]),
+    TypeOrmModule.forFeature([ExercisesEntity, ExercisesListEntity]),
     UserModule,
     WorkoutModule,
   ],
