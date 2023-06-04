@@ -15,7 +15,11 @@ export class WorkoutService {
   async getUserWorkouts(userId: number) {
     const user = await this.userService.getUser(userId);
     if (user) {
-      const workouts = await this.workoutRepository.find({ where: { userId } });
+      const workouts = await this.workoutRepository.find({
+        where: { userId },
+        relations: ['exercises'],
+        select: ['workoutId', 'userId', 'date', 'name', 'numberOfExercises'],
+      });
       if (workouts.length) {
         return workouts;
       }

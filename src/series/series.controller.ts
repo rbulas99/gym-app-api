@@ -3,15 +3,15 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SeriesService } from './series.service';
 
 @ApiTags('Users/Workouts')
-@Controller('workouts/:workoutId/series')
+@Controller('workouts')
 export class SeriesController {
   constructor(private readonly seriesService: SeriesService) {}
-  @Get()
+  @Get(':workoutId/series')
   @ApiOperation({ summary: 'Get exercise series' })
   async getExerciseSeries(@Param('workoutId') workoutId: number) {
     return this.seriesService.getExerciseSeries(workoutId);
   }
-  @Delete(':serieId')
+  @Delete('series/:serieId')
   @ApiOperation({ summary: 'Delete serie' })
   async deleteSerieFromExercise(@Param('serieId') serieId: number) {
     return this.seriesService.deleteSerieFormExercise(serieId);

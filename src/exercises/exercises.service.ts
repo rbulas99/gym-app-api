@@ -31,17 +31,15 @@ export class ExercisesService {
     }
     throw new NotFoundException('Workout not found!');
   }
-  async getAllExercises(workoutId: number) {
-    const workout = await this.workoutService.getWorkout(workoutId);
-    if (workout) {
-      return this.exercisesRepository.find({ where: { workoutId } });
-    }
-    throw new NotFoundException('Workout not found!');
-  }
+
   async getWorkoutExercises(workoutId: number) {
     const workout = await this.workoutService.getWorkout(workoutId);
     if (workout) {
-      return this.exercisesRepository.find({ where: { workoutId } });
+      return this.exercisesRepository.find({
+        where: { workoutId },
+        relations: ['exerciseType'],
+        select: ['exerciseId', 'exerciseType'],
+      });
     }
     throw new NotFoundException('Workout not found!');
   }
