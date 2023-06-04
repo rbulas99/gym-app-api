@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateWorkoutDto } from './dtos';
 
 @ApiTags('Users/Workouts')
@@ -8,10 +8,13 @@ import { CreateWorkoutDto } from './dtos';
 export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
 
+  @ApiOperation({ summary: 'Get user workouts' })
   @Get()
-  async findUserWorkouts(@Param('userId') userId: number) {
+  async getUserWorkoud(@Param('userId') userId: number) {
     return this.workoutService.getUserWorkouts(userId);
   }
+
+  @ApiOperation({ summary: 'Create workout' })
   @Post()
   async createWorkout(
     @Param('userId') id: number,

@@ -11,10 +11,10 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll(): Promise<UserEntity[]> {
+  async getAllUsers(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
-  async findOne(id: number): Promise<UserEntity> {
+  async getUser(id: number): Promise<UserEntity> {
     return this.userRepository.findOne({ where: { userId: id } });
   }
   async addUser(createUserDto: CreateUserDto): Promise<UserEntity> {

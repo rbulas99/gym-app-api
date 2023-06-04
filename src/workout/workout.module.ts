@@ -10,5 +10,6 @@ import { UserService } from 'src/user/user.service';
   imports: [TypeOrmModule.forFeature([WorkoutEntity]), UserModule],
   controllers: [WorkoutController],
   providers: [WorkoutService, UserService],
+  exports: [TypeOrmModule],
 })
 export class WorkoutModule {}

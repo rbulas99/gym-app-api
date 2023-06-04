@@ -1,13 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'exercise' })
-export class ExerciseEntity {
+export class ExercisesEntity {
   @PrimaryGeneratedColumn()
   exerciseId: number;
 
   @Column()
-  workoutId: string;
+  workoutId: number;
 
   @Column()
-  exerciseTypeId: string;
+  exerciseTypeId: number;
 }

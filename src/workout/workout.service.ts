@@ -13,13 +13,21 @@ export class WorkoutService {
     private readonly userService: UserService,
   ) {}
   async getUserWorkouts(userId: number) {
-    return this.workoutRepository.find({
-      where: { userId },
-      relations: ['exercises'],
-    });
+    const user = await this.userService.getUser(userId);
+    if (user) {
+      const workouts = await this.workoutRepository.find({ where: { userId } });
+      if (workouts.length) {
+        return workouts;
+      }
+      throw new NotFoundException('Workouts not found!');
+    }
+    throw new NotFoundException('User not found!');
+  }
+  async getWorkout(workoutId: number) {
+    return this.workoutRepository.findOne({ where: { workoutId } });
   }
   async createWorkout(userId: number, createWorkoutDto: CreateWorkoutDto) {
-    const user = await this.userService.findOne(userId);
+    const user = await this.userService.getUser(userId);
 
     if (user) {
       const workout = new WorkoutEntity();
