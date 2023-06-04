@@ -18,7 +18,7 @@ export class WorkoutService {
       const workouts = await this.workoutRepository.find({
         where: { userId },
         relations: ['exercises'],
-        select: ['workoutId', 'userId', 'date', 'name', 'numberOfExercises'],
+        order: { workoutId: 'DESC' },
       });
       if (workouts.length) {
         return workouts;

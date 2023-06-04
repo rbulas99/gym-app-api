@@ -26,7 +26,7 @@ export class ExercisesController {
   async deleteExerciseFromWorkout(@Param('exerciseId') exerciseId: number) {
     return this.exercisesService.deleteExerciseFromWorkout(exerciseId);
   }
-  @Get('exercise/list')
+  @Get('exercises/list')
   @ApiOperation({ summary: 'Get exercise select list' })
   async getExerciseList() {
     return this.exercisesService.getExercisesList();

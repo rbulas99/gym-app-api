@@ -1,13 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SeriesEnity } from './entities/series.enity';
+import { SeriesEntity } from './entities/series.enity';
 import { Repository } from 'typeorm';
+import { AddSerieDto } from './dtos/add-serie.dto';
 
 @Injectable()
 export class SeriesService {
   constructor(
-    @InjectRepository(SeriesEnity)
-    private readonly seriesRepository: Repository<SeriesEnity>,
+    @InjectRepository(SeriesEntity)
+    private readonly seriesRepository: Repository<SeriesEntity>,
   ) {}
 
   async getSerie(serieId: number) {
@@ -33,5 +34,12 @@ export class SeriesService {
       return this.seriesRepository.delete(serieId);
     }
     throw new NotFoundException('Serie not found!');
+  }
+  async addSerieToExercise(exerciseId: number, addSerieDto: AddSerieDto) {
+    const serie = new SeriesEntity();
+    serie.exerciseId = exerciseId;
+    serie.reps = addSerieDto.reps;
+    serie.weight = addSerieDto.weight;
+    return this.seriesRepository.save(serie);
   }
 }

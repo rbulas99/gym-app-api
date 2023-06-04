@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { WorkoutEntity } from 'src/workout/entities/workout.entity';
 import { ExercisesEntity } from 'src/exercises/entities/exercises.entity';
-import { SeriesEnity } from 'src/series/entities/series.enity';
+import { SeriesEntity } from 'src/series/entities/series.enity';
 import { SeriesModule } from 'src/series/series.module';
 import { ExercisesListEntity } from 'src/exercises/entities';
 
@@ -24,7 +24,7 @@ import { ExercisesListEntity } from 'src/exercises/entities';
         UserEntity,
         WorkoutEntity,
         ExercisesEntity,
-        SeriesEnity,
+        SeriesEntity,
         ExercisesListEntity,
       ],
       synchronize: false,
