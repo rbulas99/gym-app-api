@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ExercisesEntity } from 'src/exercises/entities';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity({ name: 'serie' })
 export class SeriesEntity {
@@ -13,4 +20,8 @@ export class SeriesEntity {
 
   @Column()
   weight: number;
+
+  @ManyToOne(() => ExercisesEntity, (exercise) => exercise.series)
+  @JoinColumn({ name: 'exerciseId' })
+  exercise: ExercisesEntity;
 }

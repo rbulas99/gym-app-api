@@ -5,9 +5,11 @@ import {
   JoinColumn,
   OneToOne,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { ExercisesListEntity } from './exercises-list.enity';
 import { WorkoutEntity } from 'src/workout/entities/workout.entity';
+import { SeriesEntity } from 'src/series/entities/series.enity';
 
 @Entity({ name: 'exercise' })
 export class ExercisesEntity {
@@ -27,4 +29,8 @@ export class ExercisesEntity {
   @ManyToOne(() => WorkoutEntity, (workout) => workout.exercises)
   @JoinColumn({ name: 'workoutId' })
   workout: WorkoutEntity;
+
+  @OneToMany(() => SeriesEntity, (serie) => serie.exercise)
+  @JoinColumn({ name: 'exerciseId' })
+  series: SeriesEntity[];
 }

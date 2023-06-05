@@ -1,9 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { WorkoutEntity } from './entities/workout.entity';
-import { CreateWorkoutDto } from './dtos';
+
 import { UserService } from 'src/user/user.service';
+
+import { WorkoutEntity } from './entities/workout.entity';
+
+import { CreateWorkoutDto } from './dtos';
 
 @Injectable()
 export class WorkoutService {
@@ -12,24 +15,31 @@ export class WorkoutService {
     private readonly workoutRepository: Repository<WorkoutEntity>,
     private readonly userService: UserService,
   ) {}
-  async getUserWorkouts(userId: number) {
+
+  async getWorkout(workoutId: number) {
+    const workout = await this.workoutRepository.findOne({
+      where: { workoutId },
+      relations: ['exercises', 'exercises.series', 'exercises.exerciseType'],
+      order: { workoutId: 'DESC' },
+    });
+    if (workout) {
+      return workout;
+    }
+    throw new NotFoundException('Workouts not found!');
+  }
+
+  async getAllWorkouts(userId: number) {
     const user = await this.userService.getUser(userId);
     if (user) {
       const workouts = await this.workoutRepository.find({
         where: { userId },
-        relations: ['exercises'],
         order: { workoutId: 'DESC' },
       });
-      if (workouts.length) {
-        return workouts;
-      }
-      throw new NotFoundException('Workouts not found!');
+      return workouts;
     }
     throw new NotFoundException('User not found!');
   }
-  async getWorkout(workoutId: number) {
-    return this.workoutRepository.findOne({ where: { workoutId } });
-  }
+
   async createWorkout(userId: number, createWorkoutDto: CreateWorkoutDto) {
     const user = await this.userService.getUser(userId);
 

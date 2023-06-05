@@ -7,15 +7,23 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserEntity } from './entities/user.entity';
-import { CreateUserDto, UpdateUserDto } from './dtos';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { UserService } from './user.service';
+
+import { UserEntity } from './entities/user.entity';
+
+import { WorkoutService } from 'src/workout/workout.service';
+
+import { CreateUserDto, UpdateUserDto } from './dtos';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly workoutService: WorkoutService,
+  ) {}
 
   @ApiOperation({ summary: 'Get all users' })
   @Get()
@@ -33,11 +41,13 @@ export class UserController {
       throw new NotFoundException('User not found!');
     }
   }
+
   @ApiOperation({ summary: 'Create user' })
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.addUser(createUserDto);
   }
+
   @ApiOperation({ summary: 'Edit user' })
   @Put(':id')
   async updateUser(
@@ -45,5 +55,11 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.userService.updateUser(id, updateUserDto);
+  }
+
+  @ApiOperation({ summary: 'Get user Workouts' })
+  @Get(':userId/workouts')
+  async getAllWorkouts(@Param('userId') userId: number) {
+    return this.workoutService.getAllWorkouts(userId);
   }
 }
